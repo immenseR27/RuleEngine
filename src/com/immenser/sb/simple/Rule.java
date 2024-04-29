@@ -1,25 +1,20 @@
-package company;
+package com.immenser.sb.chain;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.immenser.sb.Callback;
 
 public class Rule{
 
     private int var1;
     private String operation;
     private int var2;
-    private List<Rule> next;
-    private List<Rule> prev;
+    private Rule next;
     private Callback action;
-    public String name;
 
-    public Rule(String name, int var1, String operation, int var2){
-        this.name = name;
+    public Rule(int var1, String operation, int var2){
         this.var1 = var1;
         this.operation = operation;
         this.var2 = var2;
         this.next = null;
-        this.prev = null;
         this.action = null;
     }
 
@@ -36,27 +31,13 @@ public class Rule{
         return false;
     }
 
-    public List<Rule> chain(List<Rule> rules){
-        this.next = rules;
-        for (Rule rule : rules){
-            if (rule.getPrev() == null){
-                rule.setPrev(new ArrayList<>());
-            }
-            rule.prev.add(this);
-        }
+    public Rule chain(Rule rule){
+        this.next = rule;
         return next;
     }
 
-    public List<Rule> getNext() {
+    public Rule getNext() {
         return next;
-    }
-
-    public void setPrev(List<Rule> prev) {
-        this.prev = prev;
-    }
-
-    public List<Rule> getPrev() {
-        return prev;
     }
 
     public void setAction(Callback action) {
